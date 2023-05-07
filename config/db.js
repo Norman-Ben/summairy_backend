@@ -11,15 +11,16 @@ const sequelize = new Sequelize(
   }
 );
 
-async function testDatabaseConnection() {
+async function connectDB() {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    console.log(
+      'Connection has been established successfully with postgres DB.'
+    );
   } catch (error) {
     console.error('Unable to connect to the database:', error);
+    process.exit(1);
   }
 }
 
-testDatabaseConnection();
-
-console.log(dotenv);
+module.exports = { sequelize, connectDB };
