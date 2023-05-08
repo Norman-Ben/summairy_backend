@@ -1,30 +1,44 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const { User } = require('./userModel');
+const { Summary } = require('./summaryModel');
 const dotenv = require('dotenv').config({ path: '../.env' });
 
-const Summary = sequelize.define('Summary', {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  user: {
-    type: DataTypes.INTEGER,
+  name: {
+    type: DataTypes.STRING(50),
     allowNull: false,
-    references: {
-      model: 'User',
-      key: 'id',
+    validate: {
+      notEmpty: {
+        msg: 'A name is required.',
+      },
     },
   },
-  summary: {
-    type: DataTypes.STRING,
+  email: {
+    type: DataTypes.STRING(50),
     allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true,
+      notEmpty: {
+        msg: 'An email address is required.',
+      },
+    },
   },
-  url: {
-    type: DataTypes.STRING,
+  password: {
+    type: DataTypes.STRING(50),
     allowNull: false,
+    validate: {
+      notEmpty: {
+        msg: 'A password is required.',
+      },
+    },
   },
+
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -37,9 +51,9 @@ const Summary = sequelize.define('Summary', {
   },
 });
 
-Summary.belongsTo(User, {
+User.hasMany(Summary, {
   foreignKey: 'user',
   onDelete: 'CASCADE',
 });
 
-module.exports = { Summary };
+module.exports = { User };
