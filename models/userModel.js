@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const { Summary } = require('./summaryModel');
 const dotenv = require('dotenv').config({ path: '../.env' });
 
 const User = sequelize.define('User', {
@@ -49,11 +48,6 @@ const User = sequelize.define('User', {
     allowNull: false,
     defaultValue: Sequelize.NOW,
   },
-});
-
-User.hasMany(Summary, {
-  foreignKey: 'user',
-  onDelete: 'CASCADE',
 });
 
 module.exports = { User };

@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Summary = require('../models/summaryModel');
+const { Summary, User } = require('../models/associations');
 
 // Desc: Get summaries
 // Route: GET /api/summaries

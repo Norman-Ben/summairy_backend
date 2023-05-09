@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const { User } = require('./userModel');
 const dotenv = require('dotenv').config({ path: '../.env' });
 
 const Summary = sequelize.define('Summary', {
@@ -12,10 +11,6 @@ const Summary = sequelize.define('Summary', {
   user: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'User',
-      key: 'id',
-    },
   },
   summary: {
     type: DataTypes.STRING,
@@ -35,11 +30,6 @@ const Summary = sequelize.define('Summary', {
     allowNull: false,
     defaultValue: Sequelize.NOW,
   },
-});
-
-Summary.belongsTo(User, {
-  foreignKey: 'user',
-  onDelete: 'CASCADE',
 });
 
 module.exports = { Summary };
