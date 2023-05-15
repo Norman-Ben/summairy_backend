@@ -6,9 +6,10 @@ const {
   updateSummary,
   deleteSummary,
 } = require('../controllers/summaryController');
+const { protect } = require('../middleware/authMiddleware');
 
-router.route('/').get(getSummaries).post(createSummary);
+router.route('/').get(protect, getSummaries).post(protect, createSummary);
 
-router.route('/:id').put(updateSummary).delete(deleteSummary);
+router.route('/:id').put(protect, updateSummary).delete(protect, deleteSummary);
 
 module.exports = router;

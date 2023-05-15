@@ -87,9 +87,16 @@ const registerUser = asyncHandler(async (req, res) => {
 // Route: POST /api/users/me
 // Access: Private
 const getMe = asyncHandler(async (req, res) => {
-  res.json({
-    message: 'User data displayed',
+  const user = await User.findByPk(req.user.id, {
+    attributes: { exclude: ['password'] },
   });
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found.');
+  }
+
+  res.status(200).json(user);
 });
 
 // Generate JWT

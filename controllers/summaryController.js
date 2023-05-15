@@ -5,7 +5,11 @@ const { Summary, User } = require('../models/associations');
 // Route: GET /api/summaries
 // Access: Private
 const getSummaries = asyncHandler(async (req, res) => {
-  const summaries = await Summary.findAll();
+  const summaries = await Summary.findAll({
+    where: {
+      userId: req.user.id,
+    },
+  });
 
   res.status(200).json(summaries);
 });
@@ -22,6 +26,7 @@ const createSummary = asyncHandler(async (req, res) => {
   const summary = await Summary.create({
     summary: req.body.summary,
     url: req.body.url,
+    userId: req.user.id,
   });
 
   res.status(200).json(summary);
@@ -36,6 +41,20 @@ const updateSummary = asyncHandler(async (req, res) => {
   if (!summary) {
     res.status(400);
     throw new Error('Summary not found in the DB with the specified ID.');
+  }
+
+  const user = await User.findByPk(req.user.id);
+
+  // Check for user
+  if (!user) {
+    res.status(401);
+    throw new Error('User not found in the DB with the specified ID.');
+  }
+
+  // Check if user owns summary
+  if (summary.userId !== user.id) {
+    res.status(403);
+    throw new Error('User not authorized to update this summary.');
   }
 
   summary.summary = req.body.summary || summary.summary;
@@ -55,6 +74,20 @@ const deleteSummary = asyncHandler(async (req, res) => {
   if (!summary) {
     res.status(400);
     throw new Error('Summary not found in the DB with the specified ID.');
+  }
+
+  const user = await User.findByPk(req.user.id);
+
+  // Check for user
+  if (!user) {
+    res.status(401);
+    throw new Error('User not found in the DB with the specified ID.');
+  }
+
+  // Check if user owns summary
+  if (summary.userId !== user.id) {
+    res.status(403);
+    throw new Error('User not authorized to delete this summary.');
   }
 
   await summary.destroy();

@@ -8,10 +8,6 @@ const Summary = sequelize.define('Summary', {
     autoIncrement: true,
     primaryKey: true,
   },
-  user: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   summary: {
     type: DataTypes.STRING,
     allowNull: false,

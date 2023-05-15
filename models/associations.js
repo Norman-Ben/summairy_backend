@@ -3,12 +3,12 @@ const { User } = require('./userModel');
 const { Summary } = require('./summaryModel');
 
 User.hasMany(Summary, {
-  foreignKey: 'user',
+  foreignKey: 'userId',
   onDelete: 'CASCADE',
 });
 
 Summary.belongsTo(User, {
-  foreignKey: 'user',
+  foreignKey: 'userId',
   onDelete: 'CASCADE',
 });
 
