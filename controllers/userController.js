@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const { User } = require('../models/associations');
+const dotenv = require('dotenv').config({ path: '../.env' });
 
 // Desc: Authenticate user
 // Route: POST /api/users/login

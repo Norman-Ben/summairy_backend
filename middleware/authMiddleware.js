@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const { User } = require('../models/associations');
+const dotenv = require('dotenv').config({ path: '../.env' });
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
