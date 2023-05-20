@@ -5,6 +5,11 @@ const { sequelize } = require('./config/db');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 
+const corsOptions = {
+  origin: 'http://127.0.0.1:5173/',
+  optionsSuccessStatus: 200,
+};
+
 const app = express();
 app.use(cors());
 

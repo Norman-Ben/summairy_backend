@@ -9,11 +9,11 @@ const Summary = sequelize.define('Summary', {
     primaryKey: true,
   },
   summary: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(2000),
     allowNull: false,
   },
   url: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: false,
   },
   createdAt: {
