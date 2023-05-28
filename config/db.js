@@ -1,15 +1,9 @@
 const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv').config({ path: '../.env' });
 
-const sequelize = new Sequelize(
-  'Summairy',
-  process.env.GCP_POSTGRESDB_USER,
-  process.env.GCP_POSTGRESDB_PASSWORD,
-  {
-    host: process.env.GCP_POSTGRESDB_HOST,
-    dialect: 'postgres',
-  }
-);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+});
 
 async function connectDB() {
   try {
