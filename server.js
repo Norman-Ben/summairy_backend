@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
-const { sequelize } = require('./config/db');
+const { connectDB } = require('./config/db');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 
@@ -20,14 +20,8 @@ app.use('/api/users', require('./routes/userRoutes'));
 
 app.use(errorHandler);
 
-sequelize
-  .authenticate()
+connectDB()
   .then(() => {
-    console.log('Connection has been established successfully.');
-    return sequelize.sync();
-  })
-  .then(() => {
-    console.log('All models were synchronized successfully.');
     app.listen(port, () => {
       console.log(`Server is running on port: ${port}`);
     });
