@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
 const { connectDB } = require('./config/db');
+const limiter = require('./config/rateLimiter');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 
@@ -11,6 +12,8 @@ const corsOptions = {
 
 const app = express();
 app.use(cors(corsOptions));
+
+app.use(limiter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
